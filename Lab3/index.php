@@ -27,19 +27,17 @@
             <?php
             if (!isset($_GET['store'])) {                //Если не передано предыдущее значение
                 $_GET['store'] = '';                     //Создаем пустое хранилище
-            } else
-                if (isset($_GET['key'])) {               //Если кнопка была нажата
-                    $_GET['store'] .= $_GET['key'];      //Сохранить цифру в хранилище
-                }
+            } elseif (isset($_GET['key'])) {             //Если кнопка была нажата
+                $_GET['store'] .= $_GET['key'];          //Сохранить цифру в хранилище
+            }
 
 
             if (!isset($_GET['quantity'])) {             //Если кнопки ранее не нажимались
                 $_GET['quantity'] = 0;                   //Устанавливаем счётчик на 0
-            } else {
-                if (isset($_GET['quantity'])) {          //Если кнапка была нажата
-                    $_GET['quantity']++;                 //Дабавляем к счётчику 1
-                }
+            } elseif (isset($_GET['quantity'])) {        //Если кнапка была нажата
+                $_GET['quantity']++;                     //Дабавляем к счётчику 1
             }
+
 
             echo $_GET['store'];                         //Выводим содержание хранилища
             ?>
@@ -47,37 +45,37 @@
         <div class="numbers">
             <div class="numbers-row">
                 <a class="number"
-                   href="?key=1$quantity=<?php echo $_GET['quantity']; ?>$store=<?php echo $_GET['store']; ?>">1</a>
+                   href="?key=1&quantity=<?php echo $_GET['quantity']; ?>&store=<?php echo $_GET['store']; ?>">1</a>
                 <a class="number"
-                   href="?key=2$quantity=<?php echo $_GET['quantity']; ?>$store=<?php echo $_GET['store']; ?>">2</a>
+                   href="?key=2&quantity=<?php echo $_GET['quantity']; ?>&store=<?php echo $_GET['store']; ?>">2</a>
                 <a class="number"
-                   href="?key=3$quantity=<?php echo $_GET['quantity']; ?>$store=<?php echo $_GET['store']; ?>">3</a>
+                   href="?key=3&quantity=<?php echo $_GET['quantity']; ?>&store=<?php echo $_GET['store']; ?>">3</a>
                 <a class="number"
-                   href="?key=4$quantity=<?php echo $_GET['quantity']; ?>$store=<?php echo $_GET['store']; ?>">4</a>
+                   href="?key=4&quantity=<?php echo $_GET['quantity']; ?>&store=<?php echo $_GET['store']; ?>">4</a>
                 <a class="number"
-                   href="?key=5$quantity=<?php echo $_GET['quantity']; ?>$store=<?php echo $_GET['store']; ?>">5</a>
+                   href="?key=5&quantity=<?php echo $_GET['quantity']; ?>&store=<?php echo $_GET['store']; ?>">5</a>
             </div>
             <div class="numbers-row">
                 <a class="number"
-                   href="?key=6$quantity=<?php echo $_GET['quantity']; ?>$store=<?php echo $_GET['store']; ?>">6</a>
+                   href="?key=6&quantity=<?php echo $_GET['quantity']; ?>&store=<?php echo $_GET['store']; ?>">6</a>
                 <a class="number"
-                   href="?key=7$quantity=<?php echo $_GET['quantity']; ?>$store=<?php echo $_GET['store']; ?>">7</a>
+                   href="?key=7&quantity=<?php echo $_GET['quantity']; ?>&store=<?php echo $_GET['store']; ?>">7</a>
                 <a class="number"
-                   href="?key=8$quantity=<?php echo $_GET['quantity']; ?>$store=<?php echo $_GET['store']; ?>">8</a>
+                   href="?key=8&quantity=<?php echo $_GET['quantity']; ?>&store=<?php echo $_GET['store']; ?>">8</a>
                 <a class="number"
-                   href="?key=9$quantity=<?php echo $_GET['quantity']; ?>$store=<?php echo $_GET['store']; ?>">9</a>
+                   href="?key=9&quantity=<?php echo $_GET['quantity']; ?>&store=<?php echo $_GET['store']; ?>">9</a>
                 <a class="number"
-                   href="?key=0$quantity=<?php echo $_GET['quantity']; ?>$store=<?php echo $_GET['store']; ?>">0</a>
+                   href="?key=0&quantity=<?php echo $_GET['quantity']; ?>&store=<?php echo $_GET['store']; ?>">0</a>
             </div>
             <div class="reset">
-                <a href="index.php?$quantity=<?php echo $_GET['quantity']; ?>">СБРОС</a>
+                <a href="index.php?quantity=<?php echo $_GET['quantity']; ?>">СБРОС</a>
             </div>
         </div>
     </div>
 </main>
 <footer>
     <?php
-    echo '<span>Количество нажатий: ' . $_GET['quantity']++ . '</span>'
+    echo '<span>Количество нажатий: ' . $_GET['quantity']++ . '</span>';
     ?>
 </footer>
 </body>
