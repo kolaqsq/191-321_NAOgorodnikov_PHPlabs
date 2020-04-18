@@ -16,13 +16,18 @@ body {
 
 header {
   display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  justify-content: space-between;
+  flex-flow: column nowrap;
   background-color: black;
   color: white;
   width: 100%;
-  height: 20%;
+}
+
+.static {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .logo {
@@ -49,23 +54,121 @@ header {
   font-size: 2vmax;
 }
 
+.menu {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  margin: 1%;
+}
+.menu a {
+  text-decoration: none;
+  white-space: nowrap;
+  color: white;
+  font-size: 1vmax;
+  margin: 0 1%;
+  padding: 0.5%;
+  border-radius: 10px;
+  transition: 0.25s;
+}
+.menu a:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  transition: 0.25s;
+}
+.menu a.selected {
+  background-color: white;
+  color: black;
+  transition: 0.25s;
+}
+.menu a.selected:hover {
+  background-color: lightgrey;
+  transition: 0.25s;
+}
+
 main {
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: row nowrap;
   height: 100%;
   overflow: auto;
 }
 
+.side-menu {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 1.5%;
+}
+.side-menu a {
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  color: black;
+  font-size: 1.25vmax;
+  margin: 0 1%;
+  padding: 2.5%;
+  border-radius: 10px;
+  transition: 0.25s;
+}
+.side-menu a:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  transition: 0.25s;
+}
+.side-menu a.selected {
+  background-color: white;
+  transition: 0.25s;
+}
+.side-menu a.selected:hover {
+  background-color: rgba(255, 255, 255, 0.7);
+  transition: 0.25s;
+}
+
+.table {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 1.5%;
+}
+.table table {
+  border: 2px solid black;
+}
+.table td {
+  border: 1px solid black;
+  font-size: 1vmax;
+  padding: 0.75vmax;
+}
+.table .single td {
+  font-size: 1.5vmax;
+}
+.table div {
+  border: 2px solid black;
+  border-radius: 10px;
+  font-size: 1vmax;
+  padding: 1%;
+  margin: 1%;
+}
+.table .single {
+  font-size: 1.5vmax;
+}
+
 footer {
   display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
+  flex-flow: column nowrap;
+  align-items: flex-start;
   position: relative;
   bottom: 0;
   background-color: black;
   color: white;
   width: 100%;
   min-height: 12.5%;
+}
+footer span {
+  margin-left: 1%;
+  margin-top: 0.25%;
+  font-size: 1vmax;
 }
 
 /*# sourceMappingURL=main.css.map */
