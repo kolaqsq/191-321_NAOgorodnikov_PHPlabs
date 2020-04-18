@@ -7,7 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/fonts.css">
-    <title>Огородников Николай Александрович, 191-321.</title>
+    <title>Огородников Николай Александрович, 191-321. Лабораторная работа № А‐4. Пользовательские функции. Вывод
+        таблиц.</title>
 </head>
 <body>
 <header>
