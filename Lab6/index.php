@@ -1,4 +1,12 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require 'PHPMailer/PHPMailer.php';
+require 'PHPMailer/SMTP.php';
+require 'PHPMailer/Exception.php';
+
 if (isset($_POST['A']))
     switch ($_POST['TASK']) {
         case 'square':
@@ -94,11 +102,28 @@ if (isset($_POST['A']))
         else
             $output .= '<b>ОШИБКА: ТЕСТ НЕ ПРОЙДЕН</b><br><br>';
         if (array_key_exists('SEND_MAIL', $_POST)) {
-            mail($_POST['MAIL'],
-                'Результат тестирования',
-                str_replace('<br>', "\r\n", $output),
-                "From: auto@mami.ru\n" . "Content-Type: text/plain; charset=utf-8\n");
-            $output .= 'Результаты тестирования были автоматически отправлены на e-mail ' . $_POST['MAIL'];
+            $mail = new PHPMailer(true);
+            try {
+                $mail->isSMTP();
+                $mail->Host       = 'smtp.yandex.ru';
+                $mail->SMTPAuth   = true;
+                $mail->Username   = 'kolaqsqsq';
+                $mail->Password   = 'kolyanilluminat420%';
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+                $mail->Port       = 465;
+                $mail->setFrom('kolaqsqsq@yandex.ru');
+                $mail->addAddress($_POST['MAIL']);
+
+                $mail->isHTML(true);
+                $mail->Subject = 'Результаты тестирования';
+                $mail->Body    = $output;
+                $mail->AltBody = str_replace('<br>', "\r\n", $output);
+
+                $mail->send();
+                $output .= 'Результаты тестирования были автоматически отправлены на e-mail ' . $_POST['MAIL'];
+            } catch (Exception $e) {
+                $output .= "Результаты тестиования не были отправлены. Ошибка: {$mail->ErrorInfo}";
+            }
         }
         echo '<div>' . $output . '</div>';
         if ($_POST['TYPE'] == 'web')
