@@ -2,8 +2,8 @@
 if (isset($_POST['A']))
     switch ($_POST['TASK']) {
         case 'square':
-            $p = ($_POST['A'] + $_POST['B'] + $_POST['C']) * 0.5;
-            $result = round(($p * ($p - $_POST['A']) * ($p - $_POST['B']) * ($p - $_POST['C'])) ** 0.5, 2);
+            $p = round(($_POST['A'] + $_POST['B'] + $_POST['C']) * 0.5, 2);
+            $result = round(($p * ($p - $_POST['A']) * ($p - $_POST['B']) * ($p - $_POST['C'])) ** (1 / 2), 2);
             break;
         case 'perimeter':
             $result = round($_POST['A'] + $_POST['B'] + $_POST['C'], 2);
@@ -29,11 +29,17 @@ if (isset($_POST['A']))
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/fonts.css">
+
+    <?php
+    if (isset($_POST['TYPE']) && $_POST['TYPE'] == 'print')
+        echo '<link rel="stylesheet" href="css/print.css">';
+    else
+        echo '<link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/fonts.css">';
+    ?>
+
     <title>Огородников Николай Александрович, 191-321. Лабораторная работа № А‐6. Использование форм для передачи
-        данных
-        в программу РНР. Тест математических знаний.</title>
+        данных в программу РНР. Тест математических знаний.</title>
 </head>
 <body>
 <header>
@@ -74,31 +80,41 @@ if (isset($_POST['A']))
                 $output .= 'ДИСКРИМИНАНТ<br>';
                 break;
         }
-        if ($result === $_POST['RESULT'])
+        $output .= 'Значения:<br>
+                    A = ' . $_POST['A'] . '<br>
+                    B = ' . $_POST['B'] . '<br>
+                    C = ' . $_POST['C'] . '<br>';
+        if ($_POST['RESULT'] != '')
+            $output .= 'Ответ пользователя: ' . $_POST['RESULT'] . '<br>';
+        else
+            $output .= 'ОШИБКА: ПОЛЬЗОВАТЕЛЬ НЕ ВВЕЛ ОТВЕТ<br>';
+        $output .= 'Правильный ответ: ' . $result . '<br>';
+        if ($result == $_POST['RESULT'])
             $output .= '<b>ТЕСТ ПРОЙДЕН</b><br>';
         else
-            $output .= '<b>ОШИБКА: ТЕСТ НЕ ПРОЙДЕН</b><br>';
-        echo '<div>' . $output . '</div>';
-
+            $output .= '<b>ОШИБКА: ТЕСТ НЕ ПРОЙДЕН</b><br><br>';
         if (array_key_exists('SEND_MAIL', $_POST)) {
             mail($_POST['MAIL'],
                 'Результат тестирования',
                 str_replace('<br>', "\r\n", $output),
                 "From: auto@mami.ru\n" . "Content-Type: text/plain; charset=utf-8\n");
-            echo 'Результаты тестирования были автоматически отправлены на e-mail ' . $_POST['MAIL'];
+            $output .= 'Результаты тестирования были автоматически отправлены на e-mail ' . $_POST['MAIL'];
         }
+        echo '<div>' . $output . '</div>';
+        if ($_POST['TYPE'] == 'web')
+            echo '<a href="?full_name=' . $_POST['FULL_NAME'] . '&group=' . $_POST['GROUP'] . '&about=' . $_POST['ABOUT'] . '">Повторить тест</a>';
     } else {
         echo '<form name="main-form" method="post" action="index.php">
-        <label for="FIO">ФИО</label>
-        <input type="text" name="FIO" id="FIO" required><br>
+        <label for="FULL_NAME">ФИО</label>
+        <input type="text" name="FULL_NAME" id="FULL_NAME" value="' . ((isset($_GET['full_name'])) ? $_GET['full_name'] : '') . '" required><br>
         
         <label for="GROUP">Группа</label>
-        <input type="text" name="GROUP" id="GROUP" required><br>
+        <input type="text" name="GROUP" id="GROUP" value="' . ((isset($_GET['group'])) ? $_GET['group'] : '') . '" required><br>
         
         <label for="ABOUT">Немного о себе</label><br>
-        <textarea name="ABOUT" id="ABOUT" cols="30" rows="10"></textarea><br>
+        <textarea name="ABOUT" id="ABOUT" cols="30" rows="2">' . ((isset($_GET['about'])) ? $_GET['about'] : '') . '</textarea><br>
         
-        <label for="TASK">Решаемая задача</label><br>
+        <label for="TASK" class="type-header">Решаемая задача</label><br>
             <label for="square">ПЛОЩАДЬ ТРЕУГОЛЬНИКА</label>
             <input type="radio" name="TASK" id="square" value="square" checked><br>
             
@@ -132,17 +148,23 @@ if (isset($_POST['A']))
         <label for="SEND_MAIL">Отправить результат тестирования по e-mail</label>   
         <input type="checkbox" name="SEND_MAIL" id="SEND_MAIL" onclick="
             obj = document.getElementById(\'mail-input\');
-            if (this.checked)
+            inp = document.getElementById(\'MAIL\')
+            if (this.checked) {
                 obj.style.display = \'flex\';
-            else
-                obj.style.display = \'none\';"><br>
+                inp.required = \'required\';
+            }
+            else {
+                obj.style.display = \'none\';
+                inp.removeAttribute(\'required\');
+            }"><br>
+                
         
         <div id="mail-input">
             <label for="MAIL">Ваш e-mail</label>
-            <input type="text" name="MAIL" id="MAIL" required><br>
+            <input type="text" name="MAIL" id="MAIL"><br>
         </div>  
         
-        <label for="TYPE">Форма отображения результата</label>
+        <label for="TYPE" class="type-header">Форма отображения результата</label>
             <label for="web">Версия для просмотра в браузере</label>
             <input type="radio" name="TYPE" id="web" value="web" checked><br>
             

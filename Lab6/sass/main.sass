@@ -47,8 +47,30 @@ header
 main
   display: flex
   flex-flow: column nowrap
+  align-items: flex-start
   overflow: auto
   height: 100%
+
+form
+  display: flex
+  flex-flow: row wrap
+  align-items: flex-start
+  justify-content: space-between
+  width: 50%
+
+label, input, textarea
+  display: flex
+  flex: 1 0 48%
+
+.type-header
+  flex: 1 0 100%
+
+#mail-input
+  display: none
+  flex-flow: row wrap
+  align-items: flex-start
+  justify-content: space-between
+  width: 100%
 
 footer
   display: flex
