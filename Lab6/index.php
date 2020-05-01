@@ -1,7 +1,7 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
+
 use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 
 require 'PHPMailer/PHPMailer.php';
 require 'PHPMailer/SMTP.php';
@@ -61,73 +61,76 @@ if (isset($_POST['A']))
     </div>
 </header>
 <main>
+    <h1 class="print-only">Результаты тестирования</h1>
     <?php
     if (isset($result)) {
         $output = 'ФИО: ' . $_POST['FULL_NAME'] . '<br>';
         $output .= 'Группа: ' . $_POST['GROUP'] . '<br>';
         if (isset($_POST['ABOUT']))
-            $output .= '<br>' . $_POST['ABOUT'] . '<br>';
+            $output .= 'Сведения о студенте:<br>' . $_POST['ABOUT'] . '<br><br>';
         $output .= 'Решаемая задача: ';
         switch ($_POST['TASK']) {
             case 'square':
-                $output .= 'ПЛОЩАДЬ ТРЕУГОЛЬНИКА<br>';
+                $output .= '<b>ПЛОЩАДЬ ТРЕУГОЛЬНИКА</b><br>';
                 break;
             case 'perimeter':
-                $output .= 'ПЕРИМЕТР ТРЕУГОЛЬНИКА<br>';
+                $output .= '<b>ПЕРИМЕТР ТРЕУГОЛЬНИКА</b><br>';
                 break;
             case 'volume':
-                $output .= 'ОБЪЁМ ПАРАЛЛЕЛЕПИПЕДА<br>';
+                $output .= '<b>ОБЪЁМ ПАРАЛЛЕЛЕПИПЕДА</b><br>';
                 break;
             case 'average':
-                $output .= 'СРЕДНЕЕ АРИФМЕТИЧЕСКОЕ<br>';
+                $output .= '<b>СРЕДНЕЕ АРИФМЕТИЧЕСКОЕ</b><br>';
                 break;
             case 'geometric_mean':
-                $output .= 'СРЕДНЕЕ ГЕОМЕТРИЧЕСКОЕ<br>';
+                $output .= '<b>СРЕДНЕЕ ГЕОМЕТРИЧЕСКОЕ</b><br>';
                 break;
             case 'discriminant':
-                $output .= 'ДИСКРИМИНАНТ<br>';
+                $output .= '<b>ДИСКРИМИНАНТ</b><br>';
                 break;
         }
         $output .= 'Значения:<br>
-                    A = ' . $_POST['A'] . '<br>
-                    B = ' . $_POST['B'] . '<br>
-                    C = ' . $_POST['C'] . '<br>';
+                    A = <b>' . $_POST['A'] . '</b><br>
+                    B = <b>' . $_POST['B'] . '</b><br>
+                    C = <b>' . $_POST['C'] . '</b><br>';
         if ($_POST['RESULT'] != '')
-            $output .= 'Ответ пользователя: ' . $_POST['RESULT'] . '<br>';
+            $output .= 'Ответ студента: <b>' . $_POST['RESULT'] . '</b><br>';
         else
-            $output .= 'ОШИБКА: ПОЛЬЗОВАТЕЛЬ НЕ ВВЕЛ ОТВЕТ<br>';
-        $output .= 'Правильный ответ: ' . $result . '<br>';
+            $output .= '<b>ОШИБКА: СТУДЕНТ НЕ ВВЕЛ ОТВЕТ</b><br>';
+        $output .= 'Правильный ответ: <b>' . $result . '</b><br><br>';
         if ($result == $_POST['RESULT'])
             $output .= '<b>ТЕСТ ПРОЙДЕН</b><br>';
         else
-            $output .= '<b>ОШИБКА: ТЕСТ НЕ ПРОЙДЕН</b><br><br>';
+            $output .= '<b>ОШИБКА: ТЕСТ НЕ ПРОЙДЕН</b><br>';
         if (array_key_exists('SEND_MAIL', $_POST)) {
             $mail = new PHPMailer(true);
             try {
                 $mail->isSMTP();
-                $mail->Host       = 'smtp.yandex.ru';
-                $mail->SMTPAuth   = true;
-                $mail->Username   = 'kolaqsqsq';
-                $mail->Password   = 'kolyanilluminat420%';
+                $mail->Host = 'smtp.yandex.ru';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'kolaqsqsq';
+                $mail->Password = 'kolyanilluminat420%';
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-                $mail->Port       = 465;
-                $mail->setFrom('kolaqsqsq@yandex.ru');
+                $mail->Port = 465;
+                $mail->CharSet = "UTF-8";
+
+                $mail->setFrom('kolaqsqsq@yandex.ru', 'Тест математических знаний');
                 $mail->addAddress($_POST['MAIL']);
 
                 $mail->isHTML(true);
                 $mail->Subject = 'Результаты тестирования';
-                $mail->Body    = $output;
+                $mail->Body = $output;
                 $mail->AltBody = str_replace('<br>', "\r\n", $output);
 
                 $mail->send();
-                $output .= 'Результаты тестирования были автоматически отправлены на e-mail ' . $_POST['MAIL'];
+                $output .= "<br>Результаты тестирования были автоматически отправлены на e-mail <b>{$_POST['MAIL']}</b>";
             } catch (Exception $e) {
-                $output .= "Результаты тестиования не были отправлены. Ошибка: {$mail->ErrorInfo}";
+                $output .= "<br>Результаты тестиования не были отправлены. <b>Ошибка: {$mail->ErrorInfo}</b>";
             }
         }
-        echo '<div>' . $output . '</div>';
+        echo '<div class="output">' . $output . '</div>';
         if ($_POST['TYPE'] == 'web')
-            echo '<a href="?full_name=' . $_POST['FULL_NAME'] . '&group=' . $_POST['GROUP'] . '&about=' . $_POST['ABOUT'] . '">Повторить тест</a>';
+            echo '<a class="retry" href="?full_name=' . $_POST['FULL_NAME'] . '&group=' . $_POST['GROUP'] . '&about=' . $_POST['ABOUT'] . '">Повторить тест</a>';
     } else {
         echo '<form name="main-form" method="post" action="index.php">
         <label for="FULL_NAME">ФИО</label>
@@ -183,7 +186,6 @@ if (isset($_POST['A']))
                 inp.removeAttribute(\'required\');
             }"><br>
                 
-        
         <div id="mail-input">
             <label for="MAIL">Ваш e-mail</label>
             <input type="text" name="MAIL" id="MAIL"><br>

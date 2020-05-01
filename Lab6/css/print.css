@@ -1,0 +1,17 @@
+html {
+  font-family: Arial, serif;
+}
+
+header {
+  display: none;
+}
+
+.print-only {
+  display: block;
+}
+
+footer {
+  display: none;
+}
+
+/*# sourceMappingURL=print.css.map */
