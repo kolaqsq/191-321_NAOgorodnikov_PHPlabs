@@ -1,7 +1,18 @@
 <?php
 function argIsNum($array_element)
 {
+    return true;
+}
+
+function echoArray($array)
+{
     return null;
+}
+
+function echoStartArray($array) {
+    echo '<span>Исходный массив</span>';
+    echoArray($array);
+    echo '<span>Массив проверен, сортировка возможна</span>';
 }
 
 function selectionSort($array)
@@ -64,64 +75,43 @@ function builtInSort($array)
 <main>
     <?php
     if (!isset($_POST['element0'])) {
-        echo '<span>Массив не задан, сортировка невозможна</span>';
+        echo '<h1>Массив не задан, сортировка невозможна</h1>';
         exit();
     }
 
+    $input_array = array();
     for ($i = 0; $i < $_POST['amount']; $i++)
         if (argIsNum($_POST['element' . $i])) {
-            echo '<span>Элемент массива "' . $_POST['element' . $i] . '" – не число</span>';
+            $input_array[] = $_POST['element' . $i];
+        } else {
+            echo '<h1>Элемент массива "' . $_POST['element' . $i] . '" – не число</h1>';
             exit();
         }
 
+    $time = microtime(true);
     switch ($_POST['sort-type']) {
         case 'selection-sort':
             echo '<h1>Сортировка выбором</h1>';
-            break;
-        case 'bubble-sort':
-            echo '<h1>Пузырьковая сортировка</h1>';
-            break;
-        case 'shell-sort':
-            echo '<h1>Алгоритм Шелла</h1>';
-            break;
-        case 'gnome-sort':
-            echo '<h1>Алгоритм садового гнома</h1>';
-            break;
-        case 'quick-sort':
-            echo '<h1>Быстрая сортировка</h1>';
-            break;
-        case 'built-in-sort':
-            echo '<h1>Встроенная функция PHP для сортировки списков по значению</h1>';
-            break;
-    }
-
-    $input_array = array();
-    echo 'Исходный массив<br>----------------------------<br>';
-    for ($i = 0; $i < $_POST['amount']; $i++) {
-        echo '<div class="arr_element">' . $i . ': ' .
-            $_POST['element' . $i] . '</div>'; // выводим текущий элемент и его номер
-        $input_array[] = $_POST['element' . $i]; // добавляем элемент в массив для сортировки
-    }
-    echo '<br>----------------------------<br>Массив проверен, сортировка возможна';
-    $time = microtime(true); // засекаем время начала сортировки
-
-    switch ($_POST['sort-type']) {
-        case 'selection-sort':
             $n = selectionSort($input_array);
             break;
         case 'bubble-sort':
+            echo '<h1>Пузырьковая сортировка</h1>';
             $n = bubbleSort($input_array);
             break;
         case 'shell-sort':
+            echo '<h1>Алгоритм Шелла</h1>';
             $n = shellSort($input_array);
             break;
         case 'gnome-sort':
+            echo '<h1>Алгоритм садового гнома</h1>';
             $n = gnomeSort($input_array);
             break;
         case 'quick-sort':
+            echo '<h1>Быстрая сортировка</h1>';
             $n = quickSort($input_array);
             break;
         case 'built-in-sort':
+            echo '<h1>Встроенная функция PHP для сортировки списков по значению</h1>';
             $n = builtInSort($input_array);
             break;
     }
