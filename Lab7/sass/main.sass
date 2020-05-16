@@ -68,7 +68,7 @@ main
     padding: 0
     margin: 0 0 1%
 
-  #array-elements
+  #input-array-elements
     display: flex
     flex-flow: row wrap
     align-items: flex-start
@@ -77,6 +77,40 @@ main
 
     #amount
       display: none
+
+  input[type=button], input[type=submit]
+    display: flex
+    flex: 1 0 25%
+    align-items: center
+    justify-content: center
+    padding: 2.5% 0
+    margin: 2.5%
+
+.array
+  display: flex
+  flex-flow: row wrap
+  align-items: flex-start
+  justify-content: flex-start
+  width: 100%
+  margin: 2.5%
+
+  &-element
+    display: flex
+    flex-flow: column-reverse nowrap
+    align-items: flex-start
+    justify-content: flex-start
+    margin: 2.5%
+
+  .element-number
+    font-size: 1.25vw
+
+  .element-data
+    background-color: gray
+    text-align: center
+    border: 1px solid black
+    font-size: 2vw
+    font-weight: bold
+    padding: 2vmax
 
 footer
   display: flex

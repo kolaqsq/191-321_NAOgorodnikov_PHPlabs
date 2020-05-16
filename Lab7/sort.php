@@ -1,49 +1,163 @@
 <?php
 function argIsNum($array_element)
 {
+    if ($array_element == '') return false;
+    for ($i = 0; $i < strlen($array_element); $i++)
+        if ($array_element[$i] !== '0' && $array_element[$i] !== '1' && $array_element[$i] !== '2' &&
+            $array_element[$i] !== '3' && $array_element[$i] !== '4' && $array_element[$i] !== '5' &&
+            $array_element[$i] !== '6' && $array_element[$i] !== '7' && $array_element[$i] !== '8' &&
+            $array_element[$i] !== '9') return false;
     return true;
 }
 
 function echoArray($array)
 {
-    return null;
+    echo '<div class="array">';
+    for ($i = 0; $i < count($array); $i++) echo '<div class="array-element">
+        <span class="element-number">' . $i . '</span>
+        <span class="element-data">' . $array[$i] . '</span>
+    </div>';
+    echo '</div>';
 }
 
-function echoStartArray($array) {
-    echo '<span>Исходный массив</span>';
+function echoStartArray($array)
+{
+    echo '<h2>Исходный массив</h2>';
     echoArray($array);
-    echo '<span>Массив проверен, сортировка возможна</span>';
+    echo '<span>Массив проверен, сортировка возможна</span>
+        <h2>Процесс сортировки</h2>';
 }
 
 function selectionSort($array)
 {
-    return null;
-}
+    echoStartArray($array);
+    $iterations = 0;
+    for ($i = 0; $i < count($array) - 1; $i++) {
+        $min = $i;
+        for ($j = $i + 1; $j < count($array); $j++) {
+            if ($array[$j] < $array[$min])
+                $min = $j;
+        }
 
+        if ($min > $i) list($array[$i], $array[$min]) = array($array[$min], $array[$i]);
+
+        $iterations++;
+        echo '<span>Итерация: ' . $iterations . '</span>';
+        echoArray($array);
+    }
+
+    return $iterations;
+}
 
 function bubbleSort($array)
 {
-    return null;
+    echoStartArray($array);
+    $iterations = 0;
+    for ($j = 0; $j < count($array) - 1; $j++) {
+        for ($i = 0; $i < count($array) - 1 - $j; $i++) {
+            if ($array[$i] > $array[$i + 1]) list($array[$i], $array[$i + 1]) = array($array[$i + 1], $array[$i]);
+
+            $iterations++;
+            echo '<span>Итерация: ' . $iterations . '</span>';
+            echoArray($array);
+        }
+    }
+
+    return $iterations;
 }
 
 function shellSort($array)
 {
-    return null;
+    echoStartArray($array);
+    $iterations = 0;
+    for ($k = ceil(count($array) / 2); $k >= 1; $k = ceil($k / 2)) {
+        for ($i = $k; $i < count($array); $i++) {
+            $val = $array[$i];
+            $j = $i - $k;
+            while ($j >= 0 && $array[$j] > $val) {
+                $array[$j + $k] = $array[$j];
+                $j -= $k;
+                $iterations++;
+                echo '<span>Итерация: ' . $iterations . '</span>';
+                echoArray($array);
+            }
+
+            $array[$j + $k] = $val;
+            $iterations++;
+            echo '<span>Итерация: ' . $iterations . '</span>';
+            echoArray($array);
+        }
+
+        if ($k == 1) break;
+    }
+
+    return $iterations;
 }
 
 function gnomeSort($array)
 {
-    return null;
+    echoStartArray($array);
+    $i = 1;
+    $j = 2;
+    $iterations = 0;
+    while ($i < count($array)) {
+        if (!$i || $array[$i - 1] <= $array[$i]) {
+            $i = $j;
+            $j++;
+            $iterations++;
+            echo '<span>Итерация: ' . $iterations . '</span>';
+            echoArray($array);
+        } else {
+            list($array[$i], $array[$i - 1]) = array($array[$i - 1], $array[$i]);
+            $i--;
+            $iterations++;
+            echo '<span>Итерация: ' . $iterations . '</span>';
+            echoArray($array);
+        }
+    }
+
+    return $iterations;
 }
 
-function quickSort($array)
+function quickSort($array, $left_border, $right_border, $iterations)
 {
-    return null;
+    if ($iterations == 0) echoStartArray($array);
+    $left = $left_border;
+    $right = $right_border;
+    $point = $array[floor(($left_border + $right_border) / 2)];
+    do {
+        while ($array[$left] < $point)
+            $left++;
+        while ($array[$right] > $point)
+            $right--;
+
+        if ($left <= $right) {
+            list($array[$left], $array[$right]) = array($array[$right], $array[$left]);
+            $right--;
+            $left++;
+
+            $iterations++;
+            echo '<span>Итерация: ' . $iterations . '</span>';
+            echoArray($array);
+        }
+    } while ($right >= $left);
+
+    if ($right > $left_border)
+        $iterations = quickSort($array, $left_border, $right, $iterations);
+    if ($left < $right_border)
+        $iterations = quickSort($array, $left, $right_border, $iterations);
+
+    return $iterations;
 }
 
 function builtInSort($array)
 {
-    return null;
+    echoStartArray($array);
+    $iterations = sort($array);
+    echo '<span>Итерация: ' . $iterations . '</span>';
+    echoArray($array);
+
+    return $iterations;
 }
 
 ?>
@@ -108,7 +222,7 @@ function builtInSort($array)
             break;
         case 'quick-sort':
             echo '<h1>Быстрая сортировка</h1>';
-            $n = quickSort($input_array);
+            $n = quickSort($input_array, 0, count($input_array) - 1, 0);
             break;
         case 'built-in-sort':
             echo '<h1>Встроенная функция PHP для сортировки списков по значению</h1>';
@@ -116,8 +230,8 @@ function builtInSort($array)
             break;
     }
 
-    echo 'Сортировка завершена, проведено ' . $n . ' итераций. ';
-    echo 'Затрачено ' . ($time - microtime(true)) . ' микросекунд!';
+    echo '<span>Сортировка завершена, итераций проведено: ' . $n . '</span>';
+    echo '<span>Сортировка заняла ' . number_format(microtime(true) - $time, 10) . ' секунд</span>';
     ?>
 </main>
 <footer></footer>

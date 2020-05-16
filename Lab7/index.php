@@ -36,7 +36,7 @@
 </header>
 <main>
     <form action="sort.php" target="_blank" method="post" class="main-form">
-        <div id="array-elements">
+        <div id="input-array-elements">
             <input type="text" name="amount" id="amount" value="1">
             <label for="element0">Элемент №0:</label>
             <input type="text" name="element0" id="element0">
@@ -50,7 +50,7 @@
             <option value="quick-sort">Быстрая сортировка</option>
             <option value="built-in-sort">Встроенная функция PHP для сортировки списков по значению</option>
         </select>
-        <input type="button" value="Добавить ещё один элемент" onclick="addOneElement('array-elements', 'amount')">
+        <input type="button" value="Добавить ещё один элемент" onclick="addOneElement('input-array-elements', 'amount')">
         <input type="submit" value="Сортировать массив">
     </form>
 </main>
