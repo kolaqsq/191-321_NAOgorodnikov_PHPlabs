@@ -189,7 +189,7 @@ function builtInSort($array)
 <main>
     <div class="sort-data">
         <?php
-        if (!isset($_POST['element0'])) {
+        if ($_POST['element0'] == '') {
             echo '<h1>Массив не задан, сортировка невозможна</h1>';
             exit();
         }
