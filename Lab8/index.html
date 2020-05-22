@@ -17,10 +17,18 @@
     </div>
     <div class="title">
         <h2>Огородников Николай Александрович, 191-321</h2>
-        <h1>Лабораторная работа № А‐8. Основы работы со<br>строковыми данными в РНР. Кодировка. Анализ текста.</h1>
+        <h1>Лабораторная работа № А‐8. Основы работы со
+            <br>строковыми данными в РНР. Кодировка. Анализ текста.</h1>
     </div>
 </header>
-<main></main>
+<main>
+    <form action="result.php" method="post" class="main-form">
+        <label for="text-analysis">Анализатор текста</label>
+        <textarea name="text" id="text-analysis" cols="30" rows="30"
+                  placeholder="Введите текст для анализа"></textarea>
+        <input type="submit" value="Анализировать">
+    </form>
+</main>
 <footer></footer>
 </body>
 </html>

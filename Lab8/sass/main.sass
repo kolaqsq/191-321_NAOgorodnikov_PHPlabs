@@ -47,7 +47,29 @@ header
 main
   display: flex
   flex-flow: column nowrap
+  align-items: center
+  justify-content: flex-start
   overflow: auto
+  height: 100%
+
+  .main-form
+    display: flex
+    flex-flow: column nowrap
+    align-items: flex-start
+    justify-content: flex-start
+    align-self: stretch
+    margin: 1.5vmax 5vmax 5vmax 5vmax
+
+    label
+      font-size: 2.5vmax
+
+    textarea
+      width: 100%
+      margin-top: .5vmax
+
+    input
+      margin-top: .5vmax
+      padding: .5vmax 1.5vmax
 
 footer
   display: flex
