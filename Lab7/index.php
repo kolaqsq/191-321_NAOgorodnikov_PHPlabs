@@ -50,8 +50,10 @@
             <option value="quick-sort">Быстрая сортировка</option>
             <option value="built-in-sort">Встроенная функция PHP для сортировки списков по значению</option>
         </select>
-        <input type="button" value="Добавить ещё один элемент" onclick="addOneElement('input-array-elements', 'amount')">
-        <input type="submit" value="Сортировать массив">
+        <div class="buttons">
+            <input type="button" value="Добавить ещё один элемент" onclick="addOneElement('input-array-elements', 'amount')">
+            <input type="submit" value="Сортировать массив">
+        </div>
     </form>
 </main>
 <footer></footer>

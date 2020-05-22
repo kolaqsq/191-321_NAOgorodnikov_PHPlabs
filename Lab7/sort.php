@@ -187,52 +187,54 @@ function builtInSort($array)
     </div>
 </header>
 <main>
-    <?php
-    if (!isset($_POST['element0'])) {
-        echo '<h1>Массив не задан, сортировка невозможна</h1>';
-        exit();
-    }
-
-    $input_array = array();
-    for ($i = 0; $i < $_POST['amount']; $i++)
-        if (argIsNum($_POST['element' . $i])) {
-            $input_array[] = $_POST['element' . $i];
-        } else {
-            echo '<h1>Элемент массива "' . $_POST['element' . $i] . '" – не число</h1>';
+    <div class="sort-data">
+        <?php
+        if (!isset($_POST['element0'])) {
+            echo '<h1>Массив не задан, сортировка невозможна</h1>';
             exit();
         }
 
-    $time = microtime(true);
-    switch ($_POST['sort-type']) {
-        case 'selection-sort':
-            echo '<h1>Сортировка выбором</h1>';
-            $n = selectionSort($input_array);
-            break;
-        case 'bubble-sort':
-            echo '<h1>Пузырьковая сортировка</h1>';
-            $n = bubbleSort($input_array);
-            break;
-        case 'shell-sort':
-            echo '<h1>Алгоритм Шелла</h1>';
-            $n = shellSort($input_array);
-            break;
-        case 'gnome-sort':
-            echo '<h1>Алгоритм садового гнома</h1>';
-            $n = gnomeSort($input_array);
-            break;
-        case 'quick-sort':
-            echo '<h1>Быстрая сортировка</h1>';
-            $n = quickSort($input_array, 0, count($input_array) - 1, 0);
-            break;
-        case 'built-in-sort':
-            echo '<h1>Встроенная функция PHP для сортировки списков по значению</h1>';
-            $n = builtInSort($input_array);
-            break;
-    }
+        $input_array = array();
+        for ($i = 0; $i < $_POST['amount']; $i++)
+            if (argIsNum($_POST['element' . $i])) {
+                $input_array[] = $_POST['element' . $i];
+            } else {
+                echo '<h1>Элемент массива "' . $_POST['element' . $i] . '" – не число</h1>';
+                exit();
+            }
 
-    echo '<span>Сортировка завершена, итераций проведено: ' . $n . '</span>';
-    echo '<span>Сортировка заняла ' . number_format(microtime(true) - $time, 10) . ' секунд</span>';
-    ?>
+        $time = microtime(true);
+        switch ($_POST['sort-type']) {
+            case 'selection-sort':
+                echo '<h1>Сортировка выбором</h1>';
+                $n = selectionSort($input_array);
+                break;
+            case 'bubble-sort':
+                echo '<h1>Пузырьковая сортировка</h1>';
+                $n = bubbleSort($input_array);
+                break;
+            case 'shell-sort':
+                echo '<h1>Алгоритм Шелла</h1>';
+                $n = shellSort($input_array);
+                break;
+            case 'gnome-sort':
+                echo '<h1>Алгоритм садового гнома</h1>';
+                $n = gnomeSort($input_array);
+                break;
+            case 'quick-sort':
+                echo '<h1>Быстрая сортировка</h1>';
+                $n = quickSort($input_array, 0, count($input_array) - 1, 0);
+                break;
+            case 'built-in-sort':
+                echo '<h1>Встроенная функция PHP для сортировки списков по значению</h1>';
+                $n = builtInSort($input_array);
+                break;
+        }
+
+        echo '<h2>Сортировка завершена, итераций проведено: ' . $n . '</h2>';
+        echo '<h2>Сортировка заняла ' . number_format(microtime(true) - $time, 10) . ' секунд</h2>';
+        ?>
+    </div>
 </main>
 <footer></footer>
 </body>

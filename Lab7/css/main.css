@@ -62,10 +62,9 @@ main {
   align-items: flex-start;
   justify-content: space-between;
   width: 50%;
-  margin-top: 1vw;
-  margin-left: 1vw;
+  margin: 1vmax 0 1vmax 5vmax;
 }
-.main-form label, .main-form input, .main-form select, .main-form option {
+.main-form label, .main-form input[type=text], .main-form select, .main-form option {
   display: flex;
   flex-flow: row nowrap;
   flex: 2 0 45%;
@@ -84,40 +83,70 @@ main {
 .main-form #input-array-elements #amount {
   display: none;
 }
-.main-form input[type=button], .main-form input[type=submit] {
+.main-form .buttons {
   display: flex;
-  flex: 1 0 25%;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+}
+.main-form input[type=button], .main-form input[type=submit] {
   align-items: center;
   justify-content: center;
-  padding: 2.5% 0;
-  margin: 2.5%;
+  padding: 1.25%;
+  margin-top: 1.25%;
+  width: 33%;
 }
 
-.array {
+.sort-data {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  margin: 1vmax;
+}
+.sort-data .array {
   display: flex;
   flex-flow: row wrap;
   align-items: flex-start;
   justify-content: flex-start;
-  width: 100%;
-  margin: 2.5%;
+  align-self: stretch;
+  margin: 0 0 2.5% 2.5%;
 }
-.array-element {
+.sort-data .array-element {
   display: flex;
   flex-flow: column-reverse nowrap;
   align-items: flex-start;
   justify-content: flex-start;
   margin: 2.5%;
 }
-.array .element-number {
-  font-size: 1.25vw;
+.sort-data .array .element-number {
+  font-size: 1.25vmax;
 }
-.array .element-data {
+.sort-data .array .element-data {
+  display: flex;
+  flex-flow: column nowrap;
   background-color: gray;
   text-align: center;
+  justify-content: center;
   border: 1px solid black;
-  font-size: 2vw;
+  font-size: 2vmax;
   font-weight: bold;
-  padding: 2vmax;
+  width: 5vmax;
+  height: 5vmax;
+}
+.sort-data h1 {
+  margin: 0;
+  font-size: 2.5vmax;
+}
+.sort-data h2 {
+  margin: 1.25% 0;
+  font-size: 2vmax;
+}
+.sort-data span {
+  margin: 0 5%;
+  font-size: 1.5vmax;
 }
 
 footer {

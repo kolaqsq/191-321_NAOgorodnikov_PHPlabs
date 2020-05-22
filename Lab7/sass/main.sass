@@ -56,10 +56,9 @@ main
   align-items: flex-start
   justify-content: space-between
   width: 50%
-  margin-top: 1vw
-  margin-left: 1vw
+  margin: 1vmax 0 1vmax 5vmax
 
-  label, input, select, option
+  label, input[type=text], select, option
     display: flex
     flex-flow: row nowrap
     flex: 2 0 45%
@@ -78,39 +77,69 @@ main
     #amount
       display: none
 
-  input[type=button], input[type=submit]
+  .buttons
     display: flex
-    flex: 1 0 25%
-    align-items: center
-    justify-content: center
-    padding: 2.5% 0
-    margin: 2.5%
-
-.array
-  display: flex
-  flex-flow: row wrap
-  align-items: flex-start
-  justify-content: flex-start
-  width: 100%
-  margin: 2.5%
-
-  &-element
-    display: flex
-    flex-flow: column-reverse nowrap
+    flex-flow: column nowrap
     align-items: flex-start
     justify-content: flex-start
-    margin: 2.5%
+    width: 100%
 
-  .element-number
-    font-size: 1.25vw
+  input[type=button], input[type=submit]
+    align-items: center
+    justify-content: center
+    padding: 1.25%
+    margin-top: 1.25%
+    width: 33%
 
-  .element-data
-    background-color: gray
-    text-align: center
-    border: 1px solid black
-    font-size: 2vw
-    font-weight: bold
-    padding: 2vmax
+.sort-data
+  display: flex
+  flex-flow: column nowrap
+  align-items: flex-start
+  justify-content: flex-start
+  align-self: stretch
+  margin: 1vmax
+
+  .array
+    display: flex
+    flex-flow: row wrap
+    align-items: flex-start
+    justify-content: flex-start
+    align-self: stretch
+    margin: 0 0 2.5% 2.5%
+
+    &-element
+      display: flex
+      flex-flow: column-reverse nowrap
+      align-items: flex-start
+      justify-content: flex-start
+      margin: 2.5%
+
+    .element-number
+      font-size: 1.25vmax
+
+    .element-data
+      display: flex
+      flex-flow: column nowrap
+      background-color: gray
+      text-align: center
+      justify-content: center
+      border: 1px solid black
+      font-size: 2vmax
+      font-weight: bold
+      width: 5vmax
+      height: 5vmax
+
+  h1
+    margin: 0
+    font-size: 2.5vmax
+
+  h2
+    margin: 1.25% 0
+    font-size: 2vmax
+
+  span
+    margin: 0 5%
+    font-size: 1.5vmax
 
 footer
   display: flex
